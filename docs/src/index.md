@@ -4,8 +4,8 @@ CurrentModule = SmoQyHankelCorrCleaner
 
 # SmoQyHankelCorrCleaner.jl
 
-[SmoQyHankelCorrCleaner.jl](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl) the method introduced in the paper
-["Denoising of Imaginary Time Response Functions with Hankel Projections"](https://arxiv.org/abs/2403.12349)
+[SmoQyHankelCorrCleaner.jl](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl) implements the algorithm introduced
+in the paper ["Denoising of Imaginary Time Response Functions with Hankel Projections"](https://arxiv.org/abs/2403.12349)
 for denoising imaginary time correlation data, the citation for which is given below:
 
 ```bibtex

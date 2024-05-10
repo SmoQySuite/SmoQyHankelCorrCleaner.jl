@@ -5,8 +5,8 @@
 [![Build Status](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![Coverage](https://codecov.io/gh/SmoQySuite/SmoQyHankelCorrCleaner.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/SmoQySuite/SmoQyHankelCorrCleaner.jl)
 
-[SmoQyHankelCorrCleaner.jl](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl) implements the method introduced in the paper
-["Denoising of Imaginary Time Response Functions with Hankel Projections"](https://arxiv.org/abs/2403.12349)
+[SmoQyHankelCorrCleaner.jl](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl) implements the algorithm introduced
+in the paper ["Denoising of Imaginary Time Response Functions with Hankel Projections"](https://arxiv.org/abs/2403.12349)
 for denoising imaginary time correlation data, the citation for which is given below:
 
 ```bibtex
