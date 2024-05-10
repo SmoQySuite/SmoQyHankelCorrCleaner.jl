@@ -21,8 +21,9 @@
     G_exact = eval_Ghub.(τ, β, U, μ)
 
     # generate synthetic noisy binned greens function data
-    N_bins = 50
+    N_bins = 16
     G_binned = hcat((G_exact for b in 1:N_bins)...) + 0.01 * randn(Lτ, N_bins)
+    @views @. G_binned[1,:] = G_binned[1,:] + 0.002 * randn()
     @views @. G_binned[end,:] = 1 - G_binned[1,:] # enforce sum rule G(τ=0) + G(τ=β) = 1
 
     # get mean of noisy binned greens function data
