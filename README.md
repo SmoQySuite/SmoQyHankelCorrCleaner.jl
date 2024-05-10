@@ -30,3 +30,8 @@ or equivalently via `Pkg` do
 ```julia
 julia> using Pkg; Pkg.add("SmoQyHankelCorrCleaner")
 ```
+
+## Documentation
+
+- [STABLE](https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/stable/): Documentation for the latest version of the code published to the Julia [`General`](https://github.com/JuliaRegistries/General.git) registry.
+- [DEV](https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/dev/): Documentation for the latest commit to the `main` branch.
