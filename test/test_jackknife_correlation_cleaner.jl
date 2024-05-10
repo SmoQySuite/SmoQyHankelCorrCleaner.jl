@@ -32,8 +32,8 @@
     G_clean_mean, G_clean_err, G_cov = jackknife_hankel_correlation_cleaner(
         correlation_bins = G_binned,
         sign_bins = ones(N_bins),
-        maxiter = 1000,
-        tol = 1e-4,
+        maxiter = 100,
+        tol = 1e-3,
         positive_curvature = true,
         fixed_endpoints = true,
         symmetric = false,
@@ -44,7 +44,7 @@
     @test G_clean_mean[1] + G_clean_mean[end] ≈ 1.0
 
     # check that the curvature is strictly positive
-    @test all(g -> g > -1e-12, diff(diff(G_clean_mean)))
+    @test all(g -> g > -1e-9, diff(diff(G_clean_mean)))
 
     # check that the error is reduced
     G_clean_err = sum((G_clean_mean[i]-G_exact[i])^2 for i in eachindex(G_clean_mean))

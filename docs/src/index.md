@@ -4,7 +4,7 @@ CurrentModule = SmoQyHankelCorrCleaner
 
 # SmoQyHankelCorrCleaner.jl
 
-The [SmoQyHankelCorrCleaner.jl](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl) implements the method introduced in the paper
+[SmoQyHankelCorrCleaner.jl](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl) the method introduced in the paper
 ["Denoising of Imaginary Time Response Functions with Hankel Projections"](https://arxiv.org/abs/2403.12349)
 for denoising imaginary time correlation data, the citation for which is given below:
 
@@ -15,4 +15,17 @@ for denoising imaginary time correlation data, the citation for which is given b
   journal={arXiv preprint arXiv:2403.12349},
   year={2024}
 }
+```
+
+## Installation
+
+To install [`SmoQyHankelCorrCleaner.jl`](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl.git),
+simply open the Julia REPL and run the commands
+```julia
+julia> ]
+pkg> add SmoQyHankelCorrCleaner
+```
+or equivalently via `Pkg` do
+```julia
+julia> using Pkg; Pkg.add("SmoQyHankelCorrCleaner")
 ```

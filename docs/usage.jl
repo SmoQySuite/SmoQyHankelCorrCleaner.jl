@@ -171,7 +171,7 @@ ax = Axis(fig[1, 1],
 
 b_err = band!(
     τ, Gτ_avg_lower, Gτ_avg_upper,
-    color = (:red, 0.2), zorder = 1
+    color = (:red, 0.2)
 )
 translate!(b_err, 0, 0, 0.0)
 
@@ -243,7 +243,7 @@ ax = Axis(fig[1, 1],
 
 b_err = band!(
     τ, Gτ_jackknife_avg_lower, Gτ_jackknife_avg_upper,
-    color = (:red, 0.2), zorder = 1
+    color = (:red, 0.2)
 )
 translate!(b_err, 0, 0, 0.0)
 
@@ -316,7 +316,7 @@ ax = Axis(fig[1, 1],
 
 b_err = band!(
     τ, Gτ_bootstrap_avg_lower, Gτ_bootstrap_avg_upper,
-    color = (:red, 0.2), zorder = 1
+    color = (:red, 0.2)
 )
 translate!(b_err, 0, 0, 0.0)
 
