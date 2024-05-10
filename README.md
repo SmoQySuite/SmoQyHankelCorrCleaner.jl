@@ -1,0 +1,19 @@
+# SmoQyHankelCorrCleaner.jl
+
+<!-- [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/stable/) -->
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/dev/)
+[![Build Status](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Coverage](https://codecov.io/gh/SmoQySuite/SmoQyHankelCorrCleaner.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/SmoQySuite/SmoQyHankelCorrCleaner.jl)
+
+The [SmoQyHankelCorrCleaner.jl](https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl) implements the method introduced in the paper
+["Denoising of Imaginary Time Response Functions with Hankel Projections"](https://arxiv.org/abs/2403.12349)
+for denoising imaginary time correlation data, the citation for which is given below:
+
+```bibtex
+@article{Yu2024Denoising,
+  title={Denoising of Imaginary Time Response Functions with Hankel projections},
+  author={Yu, Yang and Kemper, Alexander F and Yang, Chao and Gull, Emanuel},
+  journal={arXiv preprint arXiv:2403.12349},
+  year={2024}
+}
+```
