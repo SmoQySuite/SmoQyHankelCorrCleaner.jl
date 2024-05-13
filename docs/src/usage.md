@@ -77,13 +77,13 @@ Gτ_noisy[end] = 1 - Gτ_noisy[1]
 Gτ_noisy
 ````
 
-Now let us denoise the noisy Green's function using the hankel projection method.
+Now let us denoise the noisy Green's function using the [`hankel_correlation_cleaner`](@ref) method.
 
 ````@example usage
 # Denoise imaginary-time Green's function
 Gτ_clean, iter, err =  hankel_correlation_cleaner(
     Gτ_noisy,
-    maxiter = 1000,
+    maxiter = 100,
     tol = 1e-3,
     positive_curvature = true,
     fixed_endpoints = true,
@@ -193,7 +193,7 @@ ax = Axis(fig[1, 1],
 
 b_err = band!(
     τ, Gτ_avg_lower, Gτ_avg_upper,
-    color = (:red, 0.2), zorder = 1
+    color = (:red, 0.2)
 )
 translate!(b_err, 0, 0, 0.0)
 
@@ -229,14 +229,14 @@ fig
 ````
 
 Now let us denoise the binned ``G(\tau)`` while propagating the errors
-using the jackknife method.
+using the [`jackknife_hankel_correlation_cleaner`](@ref) method.
 
 ````@example usage
 # Denoise and propagate errors with jackknife
 Gτ_jackknife_avg, Gτ_jackknife_err, Gτ_jackknife_cov = jackknife_hankel_correlation_cleaner(
     correlation_bins = Gτ_binned,
     sign_bins = ones(length(τ)),
-    maxiter = 1000,
+    maxiter = 100,
     tol= 1e-3,
     positive_curvature = true,
     fixed_endpoints = true,
@@ -267,7 +267,7 @@ ax = Axis(fig[1, 1],
 
 b_err = band!(
     τ, Gτ_jackknife_avg_lower, Gτ_jackknife_avg_upper,
-    color = (:red, 0.2), zorder = 1
+    color = (:red, 0.2)
 )
 translate!(b_err, 0, 0, 0.0)
 
@@ -303,7 +303,7 @@ fig
 ````
 
 Lastly, let us denoise the binned ``G(\tau)`` but instead propagate error
-using bootstrap resampling.
+using the [`bootstrap_hankel_correlation_cleaner`](@ref) method.
 
 ````@example usage
 # Denoise and propagate errors with bootstrap resampling
@@ -311,7 +311,7 @@ Gτ_bootstrap_avg, Gτ_bootstrap_err, Gτ_bootstrap_cov = bootstrap_hankel_corre
     correlation_bins = Gτ_binned,
     sign_bins = ones(length(τ)),
     N_bootstrap = 100,
-    maxiter = 1000,
+    maxiter = 100,
     tol= 1e-3,
     positive_curvature = true,
     fixed_endpoints = true,
@@ -342,7 +342,7 @@ ax = Axis(fig[1, 1],
 
 b_err = band!(
     τ, Gτ_bootstrap_avg_lower, Gτ_bootstrap_avg_upper,
-    color = (:red, 0.2), zorder = 1
+    color = (:red, 0.2)
 )
 translate!(b_err, 0, 0, 0.0)
 
