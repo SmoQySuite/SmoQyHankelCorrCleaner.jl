@@ -1,7 +1,7 @@
 name = "SmoQyHankelCorrCleaner"
 uuid = "0ea08462-a9b7-4dbd-b738-4196db0ff3ad"
 authors = ["Benjamin Cohen-Stead <benwcs@gmail.com>", "Steven Johnston <sjohn145@utk.edu>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 HiGHS = "87dc4568-4c63-4d18-b0c0-bb2238e4078b"
