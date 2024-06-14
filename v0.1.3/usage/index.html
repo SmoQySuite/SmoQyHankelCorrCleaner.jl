@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Usage · SmoQyHankelCorrCleaner.jl</title><meta name="title" content="Usage · SmoQyHankelCorrCleaner.jl"/><meta property="og:title" content="Usage · SmoQyHankelCorrCleaner.jl"/><meta property="twitter:title" content="Usage · SmoQyHankelCorrCleaner.jl"/><meta name="description" content="Documentation for SmoQyHankelCorrCleaner.jl."/><meta property="og:description" content="Documentation for SmoQyHankelCorrCleaner.jl."/><meta property="twitter:description" content="Documentation for SmoQyHankelCorrCleaner.jl."/><meta property="og:url" content="https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/usage/"/><meta property="twitter:url" content="https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/usage/"/><link rel="canonical" href="https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/usage/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">SmoQyHankelCorrCleaner.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li class="is-active"><a class="tocitem" href>Usage</a></li><li><a class="tocitem" href="../api/">API</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Usage</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Usage</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl/blob/main/docs/usage.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Usage"><a class="docs-heading-anchor" href="#Usage">Usage</a><a id="Usage-1"></a><a class="docs-heading-anchor-permalink" href="#Usage" title="Permalink"></a></h1><p>Here we demonstrate how to use the <a href="https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl">SmoQyHankelCorrCleaner.jl</a> package.</p><pre><code class="language-julia hljs">using SmoQyHankelCorrCleaner
+using Statistics
+using CairoMakie
+CairoMakie.activate!(type = &quot;svg&quot;)</code></pre><p>As an initial example, we consider the atomic Hubbard model</p><p class="math-container">\[H = U (\hat{n}_\uparrow - \tfrac{1}{2})(\hat{n}_\downarrow - \tfrac{1}{2}) - \mu (\hat{n}_\uparrow + \hat{n}_\downarrow)\]</p><p>with the correspoding imaginary-time Green&#39;s function given by</p><p class="math-container">\[G_\sigma(\tau) = \langle \hat{c}_\sigma^{\dagger}(\tau) \hat{c}_\sigma^{\phantom\dagger}(0) \rangle
+    = \frac{e^{\tau U/2 + \tau \mu - \beta U/4} + e^{-\tau U/2 + \tau \mu + \beta U/4 + \beta \mu}}{e^{-\beta U/4} + 2 e^{\beta (U/4+\mu)} + e^{-\beta(U/4-2\mu)}},\]</p><p>where <span>$\tau \in [0,\beta)$</span> and <span>$\beta = 1/T$</span> is the inverse temperature.</p><pre><code class="language-julia hljs"># Evaluate G(τ) for the atomic Hubbard model
+function atomic_hubbard_greens(τ, β, U, μ)
+
+    Z   = exp(-β*U/4) + 2*exp(β*(U/4+μ)) + exp(-β*(U/4-2*μ))
+    ZGτ = exp(τ*U/2 + τ*μ - β*U/4) + exp(-τ*U/2 + τ*μ + β*U/4 + β*μ)
+    Gτ  = ZGτ / Z
+    return Gτ
+end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">atomic_hubbard_greens (generic function with 1 method)</code></pre><p>Now we assign parameter values in our model, including the inverse temperature.</p><pre><code class="language-julia hljs"># Hubbard repulsion
+U = 5.0
+
+# Chemical potential
+μ = 2.50
+
+# Inverse temperature
+β = 5.0;</code></pre><p>Next we evaulate the Green&#39;s funciton on a regular imaginary-time <span>$\tau$</span> grid.</p><pre><code class="language-julia hljs"># Discretization interval
+Δτ = 0.05
+
+# Imaginary-time values
+τ = collect(range(start = 0.0, stop = β, step = Δτ))
+
+# Evaluate G(τ)
+Gτ_exact = atomic_hubbard_greens.(τ, β, U, μ)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">101-element Vector{Float64}:
+ 0.33333333333641946
+ 0.33333333333773435
+ 0.3333333333394226
+ 0.33333333334159043
+ 0.3333333333443739
+ 0.33333333334794807
+ 0.33333333335253734
+ 0.3333333333584301
+ 0.3333333333659964
+ 0.3333333333757119
+ ⋮
+ 0.37844509441045227
+ 0.39125798114833704
+ 0.4077100533809225
+ 0.42883493228474484
+ 0.45595981372170324
+ 0.49078885091139945
+ 0.535510219901732
+ 0.59293359435439
+ 0.6666666666635803</code></pre><p>Now let us define some synthetic noisy data.</p><pre><code class="language-julia hljs"># Add normal random noise to Green&#39;s function
+Gτ_noisy = Gτ_exact + 0.007 * randn(length(τ))
+
+# Reduce noise for G(τ = 0) point
+Gτ_noisy[1] = Gτ_exact[1] +  0.002 * randn()
+
+# Ensure that noisy data still satisty the sum rule G(τ=0) + G(τ=β) = 1
+Gτ_noisy[end] = 1 - Gτ_noisy[1]
+
+Gτ_noisy</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">101-element Vector{Float64}:
+ 0.33297386882964736
+ 0.33795015517008026
+ 0.3418000831392285
+ 0.3271389453373661
+ 0.3334400372610849
+ 0.3486419432333948
+ 0.33275590397642557
+ 0.3230644811898742
+ 0.3370696003394999
+ 0.3241246478687782
+ ⋮
+ 0.3758594375269811
+ 0.38990184864144156
+ 0.41063991346976353
+ 0.42575014155477153
+ 0.45835934314327
+ 0.48908351428001395
+ 0.5451218149666895
+ 0.5816021865857537
+ 0.6670261311703527</code></pre><p>Now let us denoise the noisy Green&#39;s function using the <a href="../api/#SmoQyHankelCorrCleaner.hankel_correlation_cleaner"><code>hankel_correlation_cleaner</code></a> method.</p><pre><code class="language-julia hljs"># Denoise imaginary-time Green&#39;s function
+Gτ_clean, iter, err =  hankel_correlation_cleaner(
+    Gτ_noisy,
+    maxiter = 100,
+    tol = 1e-3,
+    positive_curvature = true,
+    fixed_endpoints = true,
+    symmetric = false,
+    verbose = false
+)
+
+(iter, err)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(49, 0.0009895421810082986)</code></pre><p>Now let us plot the result to see how this all looks.</p><pre><code class="language-julia hljs">fig = Figure(
+    size = (700, 700),
+    fonts = (; regular= &quot;CMU Serif&quot;),
+    figure_padding = 10
+)
+
+ax = Axis(fig[1, 1],
+    aspect = 1,
+    xlabel = L&quot;\tau&quot;,
+    ylabel = L&quot;G_\sigma(\tau)&quot;,
+    xlabelsize = 36,
+    ylabelsize = 36,
+    xticklabelsize = 30,
+    yticklabelsize = 30,
+)
+
+xlims!(ax, 0.0, β)
+
+scatter!(
+    τ, Gτ_noisy,
+    color = :blue, markersize = 9, label = &quot;Noisy&quot;
+)
+
+lines!(
+    τ, Gτ_exact,
+    linewidth = 7, alpha = 1.0, color = :black, linestyle = :dash, label = &quot;Exact&quot;
+)
+
+lines!(
+    τ, Gτ_clean,
+    linewidth = 4, color = :red, linestyle = :solid, label = &quot;Denoised&quot;
+)
+axislegend(ax, halign = :left, valign = :top, labelsize = 34)
+
+fig</code></pre><img src="c3fd7bd5.svg" alt="Example block output"/><p>Often noisy imaginary-time correlation data is generated by a quantum Monte Carlo simulation, or some other stochastic process, in which you have a set of samples or bins. In this case it is desirable to propagate errors through the denoising process to get a final error for the denoised correlation function. Below we will demonstrate two ways of doing this, one using the jackknife method and the other via bootstrap resampling.</p><p>To start let us generated binned noisy synthetic <span>$G(\tau)$</span> data.</p><pre><code class="language-julia hljs"># Number of samples
+N_bins = 32
+
+# Generate synthetic binned data
+Gτ_binned = hcat((Gτ_exact for b in 1:N_bins)...) + 0.08 * randn(length(τ), N_bins)
+
+# Reduce noise for G(τ = 0)
+@. Gτ_binned[1,:] = Gτ_exact[1] +  0.02 * randn()
+
+# Ensure that noisy data still satisty the sum rule G(τ=0) + G(τ=β) = 1
+@. Gτ_binned[end,:] = 1.0 - Gτ_binned[1,:]
+
+Gτ_binned</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">101×32 Matrix{Float64}:
+ 0.318805  0.32877   0.357408  0.312586  …  0.317307  0.370985  0.298733
+ 0.129325  0.28562   0.464326  0.276879     0.427867  0.267265  0.410544
+ 0.161282  0.338777  0.383859  0.300542     0.311862  0.238422  0.372272
+ 0.216558  0.249558  0.301863  0.385806     0.180464  0.282375  0.295429
+ 0.323302  0.41762   0.392475  0.221738     0.328428  0.416757  0.30193
+ 0.185453  0.315413  0.365279  0.415649  …  0.419255  0.456736  0.287249
+ 0.357127  0.36162   0.201574  0.378636     0.30488   0.261338  0.456062
+ 0.335018  0.342582  0.376823  0.392244     0.401664  0.279095  0.300781
+ 0.36676   0.32141   0.360777  0.267186     0.353118  0.316357  0.431362
+ 0.307699  0.337229  0.243589  0.531127     0.383181  0.337554  0.217169
+ ⋮                                       ⋱            ⋮         
+ 0.368263  0.425644  0.329364  0.355967     0.410161  0.482804  0.503871
+ 0.32535   0.35102   0.365378  0.387619     0.33207   0.502514  0.395648
+ 0.371618  0.36211   0.373483  0.422721     0.523284  0.361186  0.390924
+ 0.444463  0.249494  0.499948  0.338315  …  0.506853  0.385805  0.47248
+ 0.420746  0.492634  0.518558  0.415373     0.33236   0.431615  0.426029
+ 0.52141   0.435636  0.506658  0.56256      0.596527  0.581847  0.562756
+ 0.577386  0.635587  0.630529  0.525151     0.455027  0.65689   0.465435
+ 0.617453  0.720556  0.66185   0.518759     0.588689  0.476121  0.529534
+ 0.681195  0.67123   0.642592  0.687414  …  0.682693  0.629015  0.701267</code></pre><p>Before we demonstrate how to propagate errors through the denoising process, let us first calculate mean and error of our binned <span>$G(\tau)$</span> data first. Having calculated the mean and error of our synthetic binned <span>$G(\tau)$</span> data, let us also plot it really quickly as a reference.</p><pre><code class="language-julia hljs"># Calculate mean of binned data
+Gτ_avg = vec(mean(Gτ_binned, dims=2))
+
+# Calculate standard deviation of the mean of binned data
+Gτ_err = vec(std(Gτ_binned, dims=2)) / sqrt(N_bins)
+
+# Get the average plus or minus the error
+Gτ_avg_lower = Gτ_avg - Gτ_err
+Gτ_avg_upper = Gτ_avg + Gτ_err;
+
+# Now we plot the average with the one standard deviation confidence interval
+fig = Figure(
+    size = (700, 700),
+    fonts = (; regular= &quot;CMU Serif&quot;),
+    figure_padding = 10
+)
+
+ax = Axis(fig[1, 1],
+    aspect = 1,
+    xlabel = L&quot;\tau&quot;,
+    ylabel = L&quot;G_\sigma(\tau)&quot;,
+    xlabelsize = 36,
+    ylabelsize = 36,
+    xticklabelsize = 30,
+    yticklabelsize = 30,
+)
+
+b_err = band!(
+    τ, Gτ_avg_lower, Gτ_avg_upper,
+    color = (:red, 0.2)
+)
+translate!(b_err, 0, 0, 0.0)
+
+l_err = lines!(
+    τ, Gτ_exact,
+    linewidth = 3, alpha = 1.0, color = :black, linestyle = :solid, label = &quot;Exact&quot;
+)
+translate!(l_err, 0, 0, 2.0)
+
+l_avg = lines!(
+    τ, Gτ_avg,
+    linewidth = 3, color = :red, linestyle = :solid, label = &quot;Mean&quot;
+)
+translate!(l_avg, 0, 0, 1.0)
+
+l_lower = lines!(
+    τ, Gτ_avg_lower,
+    linewidth = 2, alpha = 0.6, color = :red, linestyle = :solid
+)
+translate!(l_lower, 0, 0, 1.0)
+
+l_upper = lines!(
+    τ, Gτ_avg_upper,
+    linewidth = 2, alpha = 0.6, color = :red, linestyle = :solid
+)
+translate!(l_upper, 0, 0, 1.0)
+
+xlims!(ax, 0.0, β)
+
+axislegend(ax, halign = :left, valign = :top, labelsize = 34)
+
+fig</code></pre><img src="8b988002.svg" alt="Example block output"/><p>Now let us denoise the binned <span>$G(\tau)$</span> while propagating the errors using the <a href="../api/#SmoQyHankelCorrCleaner.jackknife_hankel_correlation_cleaner"><code>jackknife_hankel_correlation_cleaner</code></a> method.</p><pre><code class="language-julia hljs"># Denoise and propagate errors with jackknife
+Gτ_jackknife_avg, Gτ_jackknife_err, Gτ_jackknife_cov = jackknife_hankel_correlation_cleaner(
+    correlation_bins = Gτ_binned,
+    sign_bins = ones(N_bins),
+    maxiter = 100,
+    tol= 1e-3,
+    positive_curvature = true,
+    fixed_endpoints = true,
+    symmetric = false,
+    covariance = true
+)
+
+# Get the average plus or minus the error
+Gτ_jackknife_avg_lower = Gτ_jackknife_avg - Gτ_jackknife_err
+Gτ_jackknife_avg_upper = Gτ_jackknife_avg + Gτ_jackknife_err;
+
+# Now we plot the average with the one standard deviation confidence interval
+fig = Figure(
+    size = (700, 700),
+    fonts = (; regular= &quot;CMU Serif&quot;),
+    figure_padding = 10
+)
+
+ax = Axis(fig[1, 1],
+    aspect = 1,
+    xlabel = L&quot;\tau&quot;,
+    ylabel = L&quot;G_\sigma(\tau)&quot;,
+    xlabelsize = 36,
+    ylabelsize = 36,
+    xticklabelsize = 30,
+    yticklabelsize = 30,
+)
+
+b_err = band!(
+    τ, Gτ_jackknife_avg_lower, Gτ_jackknife_avg_upper,
+    color = (:red, 0.2)
+)
+translate!(b_err, 0, 0, 0.0)
+
+l_err = lines!(
+    τ, Gτ_exact,
+    linewidth = 3, alpha = 1.0, color = :black, linestyle = :solid, label = &quot;Exact&quot;
+)
+translate!(l_err, 0, 0, 2.0)
+
+l_avg = lines!(
+    τ, Gτ_jackknife_avg,
+    linewidth = 3, color = :red, linestyle = :solid, label = &quot;Denoised Jackknife Mean&quot;
+)
+translate!(l_avg, 0, 0, 1.0)
+
+l_lower = lines!(
+    τ, Gτ_jackknife_avg_lower,
+    linewidth = 2, alpha = 0.6, color = :red, linestyle = :solid
+)
+translate!(l_lower, 0, 0, 1.0)
+
+l_upper = lines!(
+    τ, Gτ_jackknife_avg_upper,
+    linewidth = 2, alpha = 0.6, color = :red, linestyle = :solid
+)
+translate!(l_upper, 0, 0, 1.0)
+
+xlims!(ax, 0.0, β)
+
+axislegend(ax, halign = :left, valign = :top, labelsize = 34)
+
+fig</code></pre><img src="64fd54f1.svg" alt="Example block output"/><p>Lastly, let us denoise the binned <span>$G(\tau)$</span> but instead propagate error using the <a href="../api/#SmoQyHankelCorrCleaner.bootstrap_hankel_correlation_cleaner"><code>bootstrap_hankel_correlation_cleaner</code></a> method.</p><pre><code class="language-julia hljs"># Denoise and propagate errors with bootstrap resampling
+Gτ_bootstrap_avg, Gτ_bootstrap_err, Gτ_bootstrap_cov = bootstrap_hankel_correlation_cleaner(
+    correlation_bins = Gτ_binned,
+    sign_bins = ones(N_bins),
+    N_bootstrap = 100,
+    maxiter = 100,
+    tol= 1e-3,
+    positive_curvature = true,
+    fixed_endpoints = true,
+    symmetric = false,
+    covariance = true
+)
+
+# Get the average plus or minus the error
+Gτ_bootstrap_avg_lower = Gτ_bootstrap_avg - Gτ_bootstrap_err
+Gτ_bootstrap_avg_upper = Gτ_bootstrap_avg + Gτ_bootstrap_err;
+
+# Now we plot the average with the one standard deviation confidence interval
+fig = Figure(
+    size = (700, 700),
+    fonts = (; regular= &quot;CMU Serif&quot;),
+    figure_padding = 10
+)
+
+ax = Axis(fig[1, 1],
+    aspect = 1,
+    xlabel = L&quot;\tau&quot;,
+    ylabel = L&quot;G_\sigma(\tau)&quot;,
+    xlabelsize = 36,
+    ylabelsize = 36,
+    xticklabelsize = 30,
+    yticklabelsize = 30,
+)
+
+b_err = band!(
+    τ, Gτ_bootstrap_avg_lower, Gτ_bootstrap_avg_upper,
+    color = (:red, 0.2)
+)
+translate!(b_err, 0, 0, 0.0)
+
+l_err = lines!(
+    τ, Gτ_exact,
+    linewidth = 3, alpha = 1.0, color = :black, linestyle = :solid, label = &quot;Exact&quot;
+)
+translate!(l_err, 0, 0, 2.0)
+
+l_avg = lines!(
+    τ, Gτ_bootstrap_avg,
+    linewidth = 3, color = :red, linestyle = :solid, label = &quot;Denoised Bootstrap Mean&quot;
+)
+translate!(l_avg, 0, 0, 1.0)
+
+l_lower = lines!(
+    τ, Gτ_bootstrap_avg_lower,
+    linewidth = 2, alpha = 0.6, color = :red, linestyle = :solid
+)
+translate!(l_lower, 0, 0, 1.0)
+
+l_upper = lines!(
+    τ, Gτ_bootstrap_avg_upper,
+    linewidth = 2, alpha = 0.6, color = :red, linestyle = :solid
+)
+translate!(l_upper, 0, 0, 1.0)
+
+xlims!(ax, 0.0, β)
+
+axislegend(ax, halign = :left, valign = :top, labelsize = 34)
+
+fig</code></pre><img src="25ff0e16.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../api/">API »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.4.1 on <span class="colophon-date" title="Friday 14 June 2024 18:24">Friday 14 June 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
