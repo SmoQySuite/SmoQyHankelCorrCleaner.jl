@@ -211,7 +211,7 @@ fig
 ## Denoise and propagate errors with jackknife
 Gτ_jackknife_avg, Gτ_jackknife_err, Gτ_jackknife_cov = jackknife_hankel_correlation_cleaner(
     correlation_bins = Gτ_binned,
-    sign_bins = ones(length(τ)),
+    sign_bins = ones(N_bins),
     maxiter = 100,
     tol= 1e-3,
     positive_curvature = true,
@@ -283,7 +283,7 @@ fig
 ## Denoise and propagate errors with bootstrap resampling
 Gτ_bootstrap_avg, Gτ_bootstrap_err, Gτ_bootstrap_cov = bootstrap_hankel_correlation_cleaner(
     correlation_bins = Gτ_binned,
-    sign_bins = ones(length(τ)),
+    sign_bins = ones(N_bins),
     N_bootstrap = 100,
     maxiter = 100,
     tol= 1e-3,
