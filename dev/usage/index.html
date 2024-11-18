@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Usage · SmoQyHankelCorrCleaner.jl</title><meta name="title" content="Usage · SmoQyHankelCorrCleaner.jl"/><meta property="og:title" content="Usage · SmoQyHankelCorrCleaner.jl"/><meta property="twitter:title" content="Usage · SmoQyHankelCorrCleaner.jl"/><meta name="description" content="Documentation for SmoQyHankelCorrCleaner.jl."/><meta property="og:description" content="Documentation for SmoQyHankelCorrCleaner.jl."/><meta property="twitter:description" content="Documentation for SmoQyHankelCorrCleaner.jl."/><meta property="og:url" content="https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/usage/"/><meta property="twitter:url" content="https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/usage/"/><link rel="canonical" href="https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/usage/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">SmoQyHankelCorrCleaner.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li class="is-active"><a class="tocitem" href>Usage</a></li><li><a class="tocitem" href="../api/">API</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Usage</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Usage</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl/blob/main/docs/usage.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Usage"><a class="docs-heading-anchor" href="#Usage">Usage</a><a id="Usage-1"></a><a class="docs-heading-anchor-permalink" href="#Usage" title="Permalink"></a></h1><p>Here we demonstrate how to use the <a href="https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl">SmoQyHankelCorrCleaner.jl</a> package.</p><pre><code class="language-julia hljs">using SmoQyHankelCorrCleaner
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Usage · SmoQyHankelCorrCleaner.jl</title><meta name="title" content="Usage · SmoQyHankelCorrCleaner.jl"/><meta property="og:title" content="Usage · SmoQyHankelCorrCleaner.jl"/><meta property="twitter:title" content="Usage · SmoQyHankelCorrCleaner.jl"/><meta name="description" content="Documentation for SmoQyHankelCorrCleaner.jl."/><meta property="og:description" content="Documentation for SmoQyHankelCorrCleaner.jl."/><meta property="twitter:description" content="Documentation for SmoQyHankelCorrCleaner.jl."/><meta property="og:url" content="https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/usage/"/><meta property="twitter:url" content="https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/usage/"/><link rel="canonical" href="https://SmoQySuite.github.io/SmoQyHankelCorrCleaner.jl/usage/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">SmoQyHankelCorrCleaner.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li class="is-active"><a class="tocitem" href>Usage</a></li><li><a class="tocitem" href="../api/">API</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Usage</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Usage</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl/blob/main/docs/usage.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Usage"><a class="docs-heading-anchor" href="#Usage">Usage</a><a id="Usage-1"></a><a class="docs-heading-anchor-permalink" href="#Usage" title="Permalink"></a></h1><p>Here we demonstrate how to use the <a href="https://github.com/SmoQySuite/SmoQyHankelCorrCleaner.jl">SmoQyHankelCorrCleaner.jl</a> package.</p><pre><code class="language-julia hljs">using SmoQyHankelCorrCleaner
 using Statistics
 using CairoMakie
 CairoMakie.activate!(type = &quot;svg&quot;)</code></pre><p>As an initial example, we consider the atomic Hubbard model</p><p class="math-container">\[H = U (\hat{n}_\uparrow - \tfrac{1}{2})(\hat{n}_\downarrow - \tfrac{1}{2}) - \mu (\hat{n}_\uparrow + \hat{n}_\downarrow)\]</p><p>with the correspoding imaginary-time Green&#39;s function given by</p><p class="math-container">\[G_\sigma(\tau) = \langle \hat{c}_\sigma^{\dagger}(\tau) \hat{c}_\sigma^{\phantom\dagger}(0) \rangle
@@ -54,26 +54,26 @@ Gτ_noisy[1] = Gτ_exact[1] +  0.002 * randn()
 Gτ_noisy[end] = 1 - Gτ_noisy[1]
 
 Gτ_noisy</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">101-element Vector{Float64}:
- 0.334303494904621
- 0.34243627310325603
- 0.33698738076806367
- 0.33077565505445083
- 0.32600672873325826
- 0.33632206950517846
- 0.33210696965011344
- 0.33089656693661457
- 0.3336967397954428
- 0.34236342101154826
+ 0.3328437848362903
+ 0.3511753573191441
+ 0.3224449043641833
+ 0.3357976243344041
+ 0.3268270336298307
+ 0.33689623308347116
+ 0.34026614687167045
+ 0.32941654939152104
+ 0.3361118663724648
+ 0.3470628034459933
  ⋮
- 0.37830475277327746
- 0.4001576044920972
- 0.39994440221835076
- 0.42533881917360544
- 0.4733795457469104
- 0.4868667553167177
- 0.5413638761830273
- 0.5882584638349991
- 0.6656965050953789</code></pre><p>Now let us denoise the noisy Green&#39;s function using the <a href="../api/#SmoQyHankelCorrCleaner.hankel_correlation_cleaner"><code>hankel_correlation_cleaner</code></a> method.</p><pre><code class="language-julia hljs"># Denoise imaginary-time Green&#39;s function
+ 0.36319990635911
+ 0.389117410956535
+ 0.4120310276619907
+ 0.4265760419646532
+ 0.45748217943270286
+ 0.49696175601175097
+ 0.5376408093721259
+ 0.5916933659374001
+ 0.6671562151637097</code></pre><p>Now let us denoise the noisy Green&#39;s function using the <a href="../api/#SmoQyHankelCorrCleaner.hankel_correlation_cleaner"><code>hankel_correlation_cleaner</code></a> method.</p><pre><code class="language-julia hljs"># Denoise imaginary-time Green&#39;s function
 Gτ_clean, iter, err =  hankel_correlation_cleaner(
     Gτ_noisy,
     maxiter = 100,
@@ -84,7 +84,7 @@ Gτ_clean, iter, err =  hankel_correlation_cleaner(
     verbose = false
 )
 
-(iter, err)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(62, 0.000870921529802416)</code></pre><p>Now let us plot the result to see how this all looks.</p><pre><code class="language-julia hljs">fig = Figure(
+(iter, err)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(44, 0.0009804840099894093)</code></pre><p>Now let us plot the result to see how this all looks.</p><pre><code class="language-julia hljs">fig = Figure(
     size = (700, 700),
     fonts = (; regular= &quot;CMU Serif&quot;),
     figure_padding = 10
@@ -118,7 +118,7 @@ lines!(
 )
 axislegend(ax, halign = :left, valign = :top, labelsize = 34)
 
-fig</code></pre><img src="f31b0796.svg" alt="Example block output"/><p>Often noisy imaginary-time correlation data is generated by a quantum Monte Carlo simulation, or some other stochastic process, in which you have a set of samples or bins. In this case it is desirable to propagate errors through the denoising process to get a final error for the denoised correlation function. Below we will demonstrate two ways of doing this, one using the jackknife method and the other via bootstrap resampling.</p><p>To start let us generated binned noisy synthetic <span>$G(\tau)$</span> data.</p><pre><code class="language-julia hljs"># Number of samples
+fig</code></pre><img src="4046f572.svg" alt="Example block output"/><p>Often noisy imaginary-time correlation data is generated by a quantum Monte Carlo simulation, or some other stochastic process, in which you have a set of samples or bins. In this case it is desirable to propagate errors through the denoising process to get a final error for the denoised correlation function. Below we will demonstrate two ways of doing this, one using the jackknife method and the other via bootstrap resampling.</p><p>To start let us generated binned noisy synthetic <span>$G(\tau)$</span> data.</p><pre><code class="language-julia hljs"># Number of samples
 N_bins = 32
 
 # Generate synthetic binned data
@@ -131,26 +131,26 @@ Gτ_binned = hcat((Gτ_exact for b in 1:N_bins)...) + 0.08 * randn(length(τ), N
 @. Gτ_binned[end,:] = 1.0 - Gτ_binned[1,:]
 
 Gτ_binned</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">101×32 Matrix{Float64}:
- 0.334229  0.350075  0.293843  0.326467  …  0.324047  0.338023  0.333913
- 0.326701  0.44677   0.237733  0.468178     0.300568  0.444921  0.387088
- 0.277506  0.344253  0.452535  0.210245     0.310522  0.368215  0.332926
- 0.391092  0.369415  0.366568  0.287959     0.393664  0.375806  0.323307
- 0.37244   0.388491  0.154712  0.433306     0.261535  0.402513  0.345826
- 0.258372  0.31081   0.35143   0.539037  …  0.329407  0.349635  0.378051
- 0.371809  0.339784  0.33921   0.411409     0.424568  0.384684  0.295049
- 0.337675  0.294588  0.389982  0.407467     0.35113   0.347223  0.448455
- 0.285294  0.277094  0.371123  0.286112     0.304771  0.250891  0.31817
- 0.337566  0.446505  0.216707  0.36538      0.241267  0.454914  0.301265
+ 0.338524  0.339408  0.377109  0.350673  …  0.29762   0.34056   0.352436
+ 0.369411  0.320603  0.417601  0.326273     0.271156  0.363993  0.428966
+ 0.254064  0.444613  0.328821  0.388379     0.467306  0.189269  0.282214
+ 0.267648  0.179984  0.366535  0.300279     0.324818  0.288644  0.259785
+ 0.410863  0.468305  0.207458  0.459637     0.499573  0.408853  0.439395
+ 0.608959  0.363517  0.318438  0.391369  …  0.257818  0.312294  0.269735
+ 0.320748  0.458357  0.381127  0.327492     0.327503  0.308169  0.330515
+ 0.25566   0.407335  0.352726  0.338186     0.322658  0.314449  0.307015
+ 0.413345  0.154728  0.301967  0.4537       0.436066  0.297201  0.333189
+ 0.469105  0.189427  0.332555  0.22911      0.389869  0.186064  0.384488
  ⋮                                       ⋱            ⋮         
- 0.447626  0.402051  0.472316  0.354793     0.246631  0.336717  0.322901
- 0.442093  0.473118  0.453712  0.268151     0.459289  0.243406  0.298915
- 0.363401  0.557163  0.29408   0.346578     0.365502  0.546533  0.299877
- 0.333687  0.477025  0.40054   0.389929  …  0.400246  0.33842   0.478766
- 0.543269  0.516898  0.479454  0.491604     0.418044  0.479597  0.322862
- 0.610888  0.595086  0.547787  0.499291     0.66      0.358622  0.44515
- 0.659768  0.536878  0.344855  0.553272     0.509042  0.48053   0.573946
- 0.58489   0.631852  0.604396  0.715315     0.485233  0.558014  0.55325
- 0.665771  0.649925  0.706157  0.673533  …  0.675953  0.661977  0.666087</code></pre><p>Before we demonstrate how to propagate errors through the denoising process, let us first calculate mean and error of our binned <span>$G(\tau)$</span> data first. Having calculated the mean and error of our synthetic binned <span>$G(\tau)$</span> data, let us also plot it really quickly as a reference.</p><pre><code class="language-julia hljs"># Calculate mean of binned data
+ 0.4036    0.375991  0.264566  0.282571     0.467744  0.34927   0.412087
+ 0.360877  0.429851  0.468628  0.381673     0.358528  0.293567  0.424776
+ 0.372212  0.34157   0.350242  0.451367     0.598485  0.422945  0.500402
+ 0.49906   0.391639  0.410659  0.341979  …  0.314345  0.539132  0.4355
+ 0.518648  0.293182  0.354095  0.489292     0.452409  0.330849  0.407106
+ 0.55338   0.491522  0.459545  0.410798     0.539289  0.465082  0.480209
+ 0.652357  0.562099  0.478753  0.60214      0.662534  0.703315  0.515136
+ 0.547533  0.741507  0.542771  0.617437     0.744496  0.607858  0.402856
+ 0.661476  0.660592  0.622891  0.649327  …  0.70238   0.65944   0.647564</code></pre><p>Before we demonstrate how to propagate errors through the denoising process, let us first calculate mean and error of our binned <span>$G(\tau)$</span> data first. Having calculated the mean and error of our synthetic binned <span>$G(\tau)$</span> data, let us also plot it really quickly as a reference.</p><pre><code class="language-julia hljs"># Calculate mean of binned data
 Gτ_avg = vec(mean(Gτ_binned, dims=2))
 
 # Calculate standard deviation of the mean of binned data
@@ -211,7 +211,7 @@ xlims!(ax, 0.0, β)
 
 axislegend(ax, halign = :left, valign = :top, labelsize = 34)
 
-fig</code></pre><img src="121a201e.svg" alt="Example block output"/><p>Now let us denoise the binned <span>$G(\tau)$</span> while propagating the errors using the <a href="../api/#SmoQyHankelCorrCleaner.jackknife_hankel_correlation_cleaner"><code>jackknife_hankel_correlation_cleaner</code></a> method.</p><pre><code class="language-julia hljs"># Denoise and propagate errors with jackknife
+fig</code></pre><img src="1cf4096e.svg" alt="Example block output"/><p>Now let us denoise the binned <span>$G(\tau)$</span> while propagating the errors using the <a href="../api/#SmoQyHankelCorrCleaner.jackknife_hankel_correlation_cleaner"><code>jackknife_hankel_correlation_cleaner</code></a> method.</p><pre><code class="language-julia hljs"># Denoise and propagate errors with jackknife
 Gτ_jackknife_avg, Gτ_jackknife_err, Gτ_jackknife_cov = jackknife_hankel_correlation_cleaner(
     correlation_bins = Gτ_binned,
     sign_bins = ones(N_bins),
@@ -278,7 +278,7 @@ xlims!(ax, 0.0, β)
 
 axislegend(ax, halign = :left, valign = :top, labelsize = 34)
 
-fig</code></pre><img src="2870f337.svg" alt="Example block output"/><p>Lastly, let us denoise the binned <span>$G(\tau)$</span> but instead propagate error using the <a href="../api/#SmoQyHankelCorrCleaner.bootstrap_hankel_correlation_cleaner"><code>bootstrap_hankel_correlation_cleaner</code></a> method.</p><pre><code class="language-julia hljs"># Denoise and propagate errors with bootstrap resampling
+fig</code></pre><img src="84d4888a.svg" alt="Example block output"/><p>Lastly, let us denoise the binned <span>$G(\tau)$</span> but instead propagate error using the <a href="../api/#SmoQyHankelCorrCleaner.bootstrap_hankel_correlation_cleaner"><code>bootstrap_hankel_correlation_cleaner</code></a> method.</p><pre><code class="language-julia hljs"># Denoise and propagate errors with bootstrap resampling
 Gτ_bootstrap_avg, Gτ_bootstrap_err, Gτ_bootstrap_cov = bootstrap_hankel_correlation_cleaner(
     correlation_bins = Gτ_binned,
     sign_bins = ones(N_bins),
@@ -346,4 +346,4 @@ xlims!(ax, 0.0, β)
 
 axislegend(ax, halign = :left, valign = :top, labelsize = 34)
 
-fig</code></pre><img src="6a5a8765.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../api/">API »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.4.1 on <span class="colophon-date" title="Friday 14 June 2024 17:51">Friday 14 June 2024</span>. Using Julia version 1.10.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+fig</code></pre><img src="249dc61f.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><a class="docs-footer-nextpage" href="../api/">API »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.0 on <span class="colophon-date" title="Monday 18 November 2024 12:50">Monday 18 November 2024</span>. Using Julia version 1.11.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
