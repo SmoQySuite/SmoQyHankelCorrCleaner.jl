@@ -10,11 +10,19 @@ in the paper ["Denoising of Imaginary Time Response Functions with Hankel Projec
 for denoising imaginary time correlation data, the citation for which is given below:
 
 ```bibtex
-@article{Yu2024Denoising,
-  title={Denoising of Imaginary Time Response Functions with Hankel projections},
-  author={Yu, Yang and Kemper, Alexander F and Yang, Chao and Gull, Emanuel},
-  journal={arXiv preprint arXiv:2403.12349},
-  year={2024}
+@article{PhysRevResearch.6.L032042,
+  title = {Denoising of imaginary time response functions with Hankel projections},
+  author = {Yu, Yang and Kemper, Alexander F. and Yang, Chao and Gull, Emanuel},
+  journal = {Phys. Rev. Res.},
+  volume = {6},
+  issue = {3},
+  pages = {L032042},
+  numpages = {8},
+  year = {2024},
+  month = {Aug},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevResearch.6.L032042},
+  url = {https://link.aps.org/doi/10.1103/PhysRevResearch.6.L032042}
 }
 ```
 
