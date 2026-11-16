@@ -9,7 +9,7 @@
         P0::AbstractArray{T} = zero(H),
         Ps::AbstractArray{T} = zeros(eltype(H), size(H)..., length(projections!)),
         verbose::Bool = false,
-        projection_names::Vectors{String} = String[]
+        projection_names::Vector{String} = String[]
     ) where {T<:AbstractFloat}
 
 Perform Dykstra's algorithm on an input array `H` given a vector `projections!` for
@@ -60,7 +60,7 @@ function dykstra!(;
         # initialize squared error to zero
         sqrd_err = zero(T)
 
-        # recrod the iteration
+        # record the iteration
         iter = i
 
         # iterate over projections

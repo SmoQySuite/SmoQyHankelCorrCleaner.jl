@@ -22,9 +22,9 @@ Denoise binned imaginary-time correlation data, propagating the error via bootst
 
 - `sign_bins::AbstractVector{T} = ones(eltype(correlation_bins), size(correlation_bins, 2))`: For data generated via a quantum Monte Carlo simulation with a sign problem, the average sign associated with each bin.
 - `N_bootstrap::Int = 100`: Number of bootstrap samples used to calculate the error.
-- `maxiter::T`: Maximum number of iteration used in Dykstra's algorithm.
+- `maxiter::Int`: Maximum number of iterations used in Dykstra's algorithm.
 - `tol::T`: Tolerance threshold used in Dykstra's algorithm.
-- `positive_curvature::Bool = false`: Whether to project onto a matrix with average anti-diagonals that have strictly positive curvature.
+- `positive_curvature::Bool = false`: Whether to project onto a matrix with anti-diagonal averages that have non-negative curvature (convex in imaginary time).
 - `fixed_endpoints::Bool = true`: Whether to fix the correlation values at ``\tau = 0`` and ``\tau = \beta``.
 - `symmetric::Bool = false`: Whether the imaginary-time correlation data is symmetric about ``\tau = \beta/2``. 
 - `covariance::Bool = false`: If true, this method also returns the covariance matrix.
@@ -96,9 +96,9 @@ Denoise binned imaginary-time correlation data, propagating the error via bootst
 
 - `sign_bins::AbstractVector{T} = ones(eltype(correlation_bins), size(correlation_bins, 2))`: For data generated via a quantum Monte Carlo simulation with a sign problem, the average sign associated with each bin.
 - `N_bootstrap::Int = 100`: Number of bootstrap samples used to calculate the error.
-- `maxiter::T`: Maximum number of iteration used in Dykstra's algorithm.
+- `maxiter::Int`: Maximum number of iterations used in Dykstra's algorithm.
 - `tol::T`: Tolerance threshold used in Dykstra's algorithm.
-- `positive_curvature::Bool = false`: Whether to project onto a matrix with average anti-diagonals that have strictly positive curvature.
+- `positive_curvature::Bool = false`: Whether to project onto a matrix with anti-diagonal averages that have non-negative curvature (convex in imaginary time).
 - `fixed_endpoints::Bool = true`: Whether to fix the correlation values at ``\tau = 0`` and ``\tau = \beta``.
 - `symmetric::Bool = false`: Whether the imaginary-time correlation data is symmetric about ``\tau = \beta/2``. 
 - `covariance::Bool = false`: If true, this method also returns the covariance matrix.
@@ -171,7 +171,8 @@ function bootstrap_hankel_correlation_cleaner!(;
         OnlineStats.fit!(bootstrap_cov_tracker, bootstrap_sample)
     end
 
-    # calculate jackknife error
+    # calculate bootstrap error, with the N/(N-1) correction for the bias of the
+    # plug-in variance estimate of the mean
     bootstrap_var = var(bootstrap_cov_tracker, corrected = false)
     @. clean_correlations_error = sqrt( N_bin/(N_bin - 1) * bootstrap_var )
 
