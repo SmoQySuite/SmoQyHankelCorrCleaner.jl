@@ -17,13 +17,13 @@ Returns the tuple `(clean_correlations iter, err)` where
 
 # Arguments
 
-- `noisy_correlations::AbstractVector{T}`: Vector of imaginary time correlation data to be cleaned.
+- `noisy_correlations::AbstractVector{T}`: Vector of imaginary time correlation data to be cleaned. Its length must be odd.
 
 # Keyword Arguments
 
-- `maxiter::T`: Maximum number of iteration used in Dykstra's algorithm.
+- `maxiter::Int`: Maximum number of iterations used in Dykstra's algorithm.
 - `tol::T`: Tolerance threshold used in Dykstra's algorithm.
-- `positive_curvature::Bool = false`: Whether to project onto a matrix with average anti-diagonals that have strictly positive curvature.
+- `positive_curvature::Bool = true`: Whether to project onto a matrix with anti-diagonal averages that have non-negative curvature (convex in imaginary time).
 - `fixed_endpoints::Bool = true`: Whether to fix the correlation values at ``\tau = 0`` and ``\tau = \beta``.
 - `symmetric::Bool = false`: Whether the imaginary-time correlation data is symmetric about ``\tau = \beta/2``. 
 - `verbose::Bool = false`: Whether to print statements tracking the convergence of the denoising process.
@@ -72,13 +72,13 @@ and `err::T` is the final error.
 
 # Arguments
 
-- `correlations::AbstractVector{T}`: Vector of imaginary time correlation data to be cleaned.
+- `correlations::AbstractVector{T}`: Vector of imaginary time correlation data to be cleaned. Its length must be odd, i.e. include both ``\tau = 0`` and ``\tau = \beta`` with ``L_\tau = \beta/\Delta\tau`` even.
 
 # Keyword Arguments
 
-- `maxiter::T`: Maximum number of iteration used in Dykstra's algorithm.
+- `maxiter::Int`: Maximum number of iterations used in Dykstra's algorithm.
 - `tol::T`: Tolerance threshold used in Dykstra's algorithm.
-- `positive_curvature::Bool = false`: Whether to project onto a matrix with average anti-diagonals that have strictly positive curvature.
+- `positive_curvature::Bool = true`: Whether to project onto a matrix with anti-diagonal averages that have non-negative curvature (convex in imaginary time).
 - `fixed_endpoints::Bool = true`: Whether to fix the correlation values at ``\tau = 0`` and ``\tau = \beta``.
 - `symmetric::Bool = false`: Whether the imaginary-time correlation data is symmetric about ``\tau = \beta/2``. 
 - `verbose::Bool = false`: Whether to print statements tracking the convergence of the denoising process.
@@ -126,13 +126,13 @@ and `err::T` is the final error.
 # Arguments
 
 - `clean_correlations::AbstractVector{T}`: Vector to contain cleaned/denoised imaginary-time correlation data.
-- `noisy_correlations::AbstractVector{T}`: Noisy imaginary-time correlation data.
+- `noisy_correlations::AbstractVector{T}`: Noisy imaginary-time correlation data. Its length must be odd.
 
 # Keyword Arguments
 
-- `maxiter::T`: Maximum number of iteration used in Dykstra's algorithm.
+- `maxiter::Int`: Maximum number of iterations used in Dykstra's algorithm.
 - `tol::T`: Tolerance threshold used in Dykstra's algorithm.
-- `positive_curvature::Bool = false`: Whether to project onto a matrix with average anti-diagonals that have strictly positive curvature.
+- `positive_curvature::Bool = true`: Whether to project onto a matrix with anti-diagonal averages that have non-negative curvature (convex in imaginary time).
 - `fixed_endpoints::Bool = true`: Whether to fix the correlation values at ``\tau = 0`` and ``\tau = \beta``.
 - `symmetric::Bool = false`: Whether the imaginary-time correlation data is symmetric about ``\tau = \beta/2``. 
 - `verbose::Bool = false`: Whether to print statements tracking the convergence of the denoising process.
@@ -150,12 +150,12 @@ function hankel_correlation_cleaner!(
 ) where {T<:AbstractFloat}
 
 
-    # construct initial Hankel matrix based on correlationd data
+    # construct initial Hankel matrix based on correlation data
     H = init_hankel_matrix(noisy_correlations)
 
-    # initialize storage matrix
+    # initialize storage matrices
     A  = zero(H)
-    A′ = @view A[2:end, 2:end]
+    A′ = @view A[1:end-1, 2:end]
 
     # initialize vector to contain projection functions
     projections! = Function[]
@@ -163,11 +163,13 @@ function hankel_correlation_cleaner!(
     # initialize vector to contain projection names
     projection_names = String[]
 
-    # initilaize partial PSD projection function
-    proj_psd_partial!(X) = project_psd!(view(X,2:size(X,1),2:size(X,2)), A′)
-    push!(projections!, proj_psd_partial!)
+    # initialize shifted PSD projection function. Dropping the first column and last row
+    # of H gives the shifted Hankel matrix H′[i,j] = G(τ[i+j]) = G((i+j-1)Δτ), which must
+    # also be positive semidefinite.
+    proj_psd_shifted!(X) = project_psd!(view(X, 1:size(X,1)-1, 2:size(X,2)), A′)
+    push!(projections!, proj_psd_shifted!)
     if verbose
-        push!(projection_names, "Partial PSD Projection")
+        push!(projection_names, "Shifted PSD Projection")
     end
 
     # initialize full PSD projection function

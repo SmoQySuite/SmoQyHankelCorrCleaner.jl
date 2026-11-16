@@ -4,11 +4,15 @@
         endpoints::Tuple{T,T} = (NaN, NaN)
     ) where {T<:AbstractFloat}
 
-Project the matrix `H` onto the nearest matrix, as measured by the Frobenius norm, that
-has anti-diagonal average values that have strictly positive curvature i.e. if you take the second
-finite difference of anti-diagonal average values the result values are strictly positive.
-If the `endpoints` are real numbers, then the `H[1,1]` and `H[end:end]` set set equal to the
-passed values.
+Modifying `H` in-place, project it onto the nearest matrix (in Frobenius norm) whose
+anti-diagonal averages ``a_l`` have non-negative second finite difference,
+``a_{l+1} - 2a_l + a_{l-1} \ge 0``. If the `endpoints` are finite, the first and last
+anti-diagonal averages, i.e. `H[1,1]` and `H[end,end]`, are also fixed to those values.
+
+Only the anti-diagonal averages are constrained, so the projection solves a weighted QP
+for the new averages ``f_l``, minimizing ``\sum_l n_l (f_l - a_l)^2`` where
+``n_l = \min(l, L-l+1)`` is the length of the ``l``-th anti-diagonal, and then shifts every
+entry of anti-diagonal ``l`` by ``f_l - a_l``. See the Algorithm page of the docs.
 """
 function project_positive_curvature!(
     H::AbstractMatrix{T},
@@ -19,13 +23,17 @@ function project_positive_curvature!(
     N = size(H,1)
     # get number of imaginary time slices
     L = 2*N-1
-    # calculate antidiagonal averates
+    # calculate antidiagonal averages
     target = [antidiagonal_average(H,l) for l in 1:L]
     # initialize model
     model = JuMP.Model(HiGHS.Optimizer)
-    # setting strings off and silen on for efficiency
+    # setting strings off and silent on for efficiency
     JuMP.set_string_names_on_creation(model, false)
     JuMP.set_silent(model)
+    # Cap the number of QP iterations. On some degenerate inputs the HiGHS QP solver cycles
+    # without ever certifying optimality and would otherwise run forever. Well-behaved solves
+    # need O(L) iterations, so the cap is never reached for them.
+    JuMP.set_attribute(model, "qp_iteration_limit", 100 * L)
     # define variables to represent correlations that get fitted
     JuMP.@variable(model, fit[1:L])
     # enforce positive curvature
@@ -35,10 +43,18 @@ function project_positive_curvature!(
         JuMP.@constraint(model, fit[1] == endpoints[1])
         JuMP.@constraint(model, fit[L] == endpoints[2])
     end
-    # minimize Frobenius norm between fitted Hankel matrix and target matrix
-    JuMP.@objective(model, Min, sum((fit[i] - target[i])^2 for i in 1:L))
+    # Minimize the Frobenius distance. Shifting the l'th anti-diagonal, of length n_l, by Δ
+    # changes the squared Frobenius norm by n_l Δ², so each term is weighted by n_l.
+    JuMP.@objective(model, Min, sum(min(l, L-l+1) * (fit[l] - target[l])^2 for l in 1:L))
     # find the solution
     JuMP.optimize!(model)
+    # When the iteration cap is hit while cycling, the solver is already at a feasible point
+    # that is (near-)optimal, so accept it. Any other failure is a genuine error.
+    status = JuMP.termination_status(model)
+    if !(status == JuMP.MOI.OPTIMAL ||
+         (status == JuMP.MOI.ITERATION_LIMIT && JuMP.primal_status(model) == JuMP.MOI.FEASIBLE_POINT))
+        error("Positive curvature projection failed: termination status $status, primal status $(JuMP.primal_status(model))")
+    end
     # get fit
     result = JuMP.value.(fit)
     # record solution
@@ -74,7 +90,7 @@ end
 
 @doc raw"""
     project_hankel!(
-        H::AbstractMattrix{T},
+        H::AbstractMatrix{T},
         endpoints::Tuple{T,T} = (NaN, NaN)
     ) where {T<:AbstractFloat}
 
@@ -127,21 +143,26 @@ function project_hankel!(
 end
 
 
+@doc raw"""
+    project_symmetrized!(H::AbstractMatrix{T}) where {T<:AbstractFloat}
+
+Modifying `H` in-place, project it onto the nearest matrix (in Frobenius norm) whose
+anti-diagonal averages are symmetric about ``\tau = \beta/2``, i.e. ``a_l = a_{L+1-l}``.
+Each anti-diagonal ``l`` is shifted uniformly by ``(a_l + a_{L+1-l})/2 - a_l``.
+"""
 function project_symmetrized!(
     H::AbstractMatrix{T}
 ) where {T<:AbstractFloat}
 
-    # get Lτ/2 + 1
-    Lτo2p1 = size(H, 1)
+    N = size(H, 1)
+    L = 2 * N - 1
 
-    # symmetrize around τ = β/2
-    if symmetrize
-        @simd for i in 1:Lτo2p1
-            j = Lτo2p1 - i + 1
-            Hsym = (H[i,1] + H[Lτo2p1, j])/2
-            H[i,1] = Hsym
-            H[Lτo2p1, j] = Hsym
-        end
+    # anti-diagonals l and L+1-l have equal length, so the weighted projection onto
+    # a_l = a_{L+1-l} reduces to the plain pairwise average
+    a = [antidiagonal_average(H, l) for l in 1:L]
+    for j in axes(H, 2), i in axes(H, 1)
+        l = i + j - 1
+        H[i, j] += (a[L+1-l] - a[l]) / 2
     end
 
     return nothing
@@ -154,19 +175,19 @@ end
         A::AbstractMatrix{T} = similar(H)
     ) where {T<:AbstractFloat}
 
-Modifying `H` in-place, project it onto the nears positive semidefinite matrix
-by setting all the negative eigenvalues to zero.
+Modifying `H` in-place, project it onto the nearest (in Frobenius norm) symmetric positive
+semidefinite matrix by symmetrizing `H` and then setting all negative eigenvalues to zero.
+The matrix `A` is used as workspace and must not alias `H`.
 """
 function project_psd!(
     H::AbstractMatrix{T},
     A::AbstractMatrix{T} = similar(H)
 ) where {T<:AbstractFloat}
 
-    ϵ, U = eigen(Hermitian(H))
-    @. ϵ = max(ϵ, 0.0)
-    Ut = adjoint(U)
-    D = Diagonal(ϵ)
-    mul!(A, D, Ut)
+    # symmetrize, since H is not necessarily symmetric during Dykstra iterations
+    ϵ, U = eigen(hermitianpart!(H))
+    @. ϵ = max(ϵ, 0)
+    mul!(A, Diagonal(ϵ), adjoint(U))
     mul!(H, U, A)
 
     return nothing

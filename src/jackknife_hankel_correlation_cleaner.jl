@@ -23,9 +23,9 @@ jackknife algorithm. Returns the mean and error of the denoised imaginary-time c
 # Keyword Arguments
 
 - `sign_bins::AbstractVector{T} = ones(eltype(correlation_bins), size(correlation_bins, 2))`: For data generated via a quantum Monte Carlo simulation with a sign problem, the average sign associated with each bin.
-- `maxiter::T`: Maximum number of iteration used in Dykstra's algorithm.
+- `maxiter::Int`: Maximum number of iterations used in Dykstra's algorithm.
 - `tol::T`: Tolerance threshold used in Dykstra's algorithm.
-- `positive_curvature::Bool = false`: Whether to project onto a matrix with average anti-diagonals that have strictly positive curvature.
+- `positive_curvature::Bool = false`: Whether to project onto a matrix with anti-diagonal averages that have non-negative curvature (convex in imaginary time).
 - `fixed_endpoints::Bool = true`: Whether to fix the correlation values at ``\tau = 0`` and ``\tau = \beta``.
 - `symmetric::Bool = false`: Whether the imaginary-time correlation data is symmetric about ``\tau = \beta/2``. 
 - `covariance::Bool = false`: If true, this method also returns the covariance matrix.
@@ -95,9 +95,9 @@ jackknife algorithm.
 # Keyword Arguments
 
 - `sign_bins::AbstractVector{T} = ones(eltype(correlation_bins), size(correlation_bins, 2))`: For data generated via a quantum Monte Carlo simulation with a sign problem, the average sign associated with each bin.
-- `maxiter::T`: Maximum number of iteration used in Dykstra's algorithm.
+- `maxiter::Int`: Maximum number of iterations used in Dykstra's algorithm.
 - `tol::T`: Tolerance threshold used in Dykstra's algorithm.
-- `positive_curvature::Bool = false`: Whether to project onto a matrix with average anti-diagonals that have strictly positive curvature.
+- `positive_curvature::Bool = false`: Whether to project onto a matrix with anti-diagonal averages that have non-negative curvature (convex in imaginary time).
 - `fixed_endpoints::Bool = true`: Whether to fix the correlation values at ``\tau = 0`` and ``\tau = \beta``.
 - `symmetric::Bool = false`: Whether the imaginary-time correlation data is symmetric about ``\tau = \beta/2``. 
 - `covariance::Bool = false`: If true, this method also returns the covariance matrix.

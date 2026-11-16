@@ -12,6 +12,12 @@ function init_hankel_matrix(
     # length of imaginary time axis plus one
     Lτp1 = length(correlations)
 
+    # an (N×N) Hankel matrix holds exactly 2N-1 values, so an even-length input
+    # would silently drop the last point
+    isodd(Lτp1) || throw(ArgumentError(
+        "length(correlations) = $Lτp1 must be odd, i.e. Lτ = β/Δτ must be even"
+    ))
+
     # half the length of the imaginary time axis
     Lτo2 = (Lτp1-1)÷2
     Lτo2p1 = Lτo2 + 1
@@ -25,24 +31,24 @@ function init_hankel_matrix(
     return H
 end
 
-@doc raw""""
+@doc raw"""
     init_hankel_matrix!(
         H::AbstractMatrix{T},
-        correaltions::AbstractVector{T}
+        correlations::AbstractVector{T}
     ) where {T<:AbstractFloat}
 
 Initialize the Hankel matrix `H` in-place based on the vector of `correlations`.
 """
 function init_hankel_matrix!(
     H::AbstractMatrix{T},
-    correaltions::AbstractVector{T}
+    correlations::AbstractVector{T}
 ) where {T<:AbstractFloat}
 
     # iterate over columns of Hankel matrix
     @simd for j in axes(H,2)
         # iterate over rows of Hankel matrix
         for i in axes(H,1)
-            H[i,j] = correaltions[i+j-1]
+            H[i,j] = correlations[i+j-1]
         end
     end
 
